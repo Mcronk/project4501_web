@@ -3,7 +3,6 @@ from django.shortcuts import render
 import urllib.request
 import urllib.parse
 import json
-#import requests
 
 # make a GET request and parse the returned JSON                                                                                                                                                           # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
@@ -11,11 +10,6 @@ def index(request):
 	return render(request, 'index.html')
 
 def product(request, pk = ''):
-	#req = requests.get('http://www.google.com')
-	#req = requests.get('http://localhost:8002/product')
-	#json_data = r.json()
-
-
 	req = urllib.request.Request('http://exp-api:8000/product')
 	resp_json = urllib.request.urlopen(req).read().decode('utf-8')
 	resp = json.loads(resp_json)
