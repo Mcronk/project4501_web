@@ -1,0 +1,3 @@
+[submodule "project4501_web/static"]
+	path = project4501_web/static
+	url = git@github.com:bshin94/bootstrap.git
