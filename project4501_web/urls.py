@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^$', views.home, name='home'),
     url(r'^course/$', views.course_info, name='course_info'),
     url(r'^course/(?P<pk>[0-9]+)/$', views.course_info, name='course_info'),
-    url(r'^courseList/$', views.course_info, name='course_info'),
+    url(r'^courseList/$', views.courseList, name='courseList'),
 
 ) 
 

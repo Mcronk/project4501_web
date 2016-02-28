@@ -23,76 +23,22 @@
             <div class="col-md-9">
 
                 <div class="thumbnail">
-                {% for course in context_dict %}
-
-                    <img class="img-responsive" src="{% static 'bootstrap/img/banner-bg.jpg' %}" alt="">
+                {% for course in courseList %}
                     <div class="caption-full">
-                        <h4 class="pull-right">price: ${{context_dict.price}}</h4>
-                        <h4>course: <a href={% url 'course_info'%}{{context_dict.name}}</a></h4>
-                        <h3><a href="#">{{context_dict.course_tutor}}</a></h3>
+                        <h4 class="pull-right">pk: {{course.course_pk}}</h4>
+                        <h4>course: <a href={% url 'course_info'%}/{{course.course_pk}}>{{course.course_name}}</a></h4>
+                        <h3><a href="#">{{course.course_tutor}}</a></h3>
                         <!--<p>Want to make these reviews work? Check out
                             <strong><a href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this building a review system tutorial</a>
                             </strong>over at maxoffsky.com!</p>
                         -->
-                        <p>{{context_dict.description}}</p>
+                        <p>{{course.description}}</p>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                     </div>
                         {% endfor %}
 
                 </div>
 
-                <div class="well">
-
-                    <div class="text-right">
-                        <a class="btn btn-success">Leave a Review</a>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">10 days ago</span>
-                            <p>This course was great in terms of quality. I would definitely take another!</p>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">12 days ago</span>
-                            <p>I've alredy applied another one!</p>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            Anonymous
-                            <span class="pull-right">15 days ago</span>
-                            <p>I've seen some better than this, but not at this price. I definitely recommend this tutor.</p>
-                        </div>
-                    </div>
-
-                </div>
 
             </div>
 
