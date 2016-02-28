@@ -9,13 +9,12 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'project4501_web.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.index, name='index'),
-    #url(r'^/(?P<pk>[0-9]+)/$', views.index, name='index'),
-    url(r'^product/$', views.product, name='product'),
-    url(r'^product/(?P<pk>[0-9]+)/$', views.product, name='product'),
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    url(r'^$', views.home, name='home'),
+    url(r'^course/$', views.course_info, name='course_info'),
+    url(r'^course/(?P<pk>[0-9]+)/$', views.course_info, name='course_info'),
+) 
 
-if settings.DEBUG:
-	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# if settings.DEBUG:
+# 	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
