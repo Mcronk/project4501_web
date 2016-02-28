@@ -1,6 +1,9 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from . import views
+from django.conf import settings
+
+from django.conf.urls.static import static
 
 urlpatterns = patterns('',
     # Examples:
@@ -12,4 +15,7 @@ urlpatterns = patterns('',
     #url(r'^/(?P<pk>[0-9]+)/$', views.index, name='index'),
     url(r'^product/$', views.product, name='product'),
     url(r'^product/(?P<pk>[0-9]+)/$', views.product, name='product'),
-)
+) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
