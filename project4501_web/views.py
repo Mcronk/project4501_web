@@ -4,32 +4,31 @@ import urllib.request
 import urllib.parse
 import json, requests
 
-# make a GET request and parse the returned JSON                                                                                                                                                           # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
+#Notes: currently no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
+#Home: currently no service-oriented home page 
 def home(request):
 	return render(request, 'home.html')
 
+#Course-GET: Use course service to get information of a course
 def course_info(request, pk = ''):
-	# course_req = requests.get('http://exp-api:8000/courses/'+course_pk)
-	req = urllib.request.Request('http://exp-api:8000/course/'+pk)
-	resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-	resp = json.loads(resp_json)
-	context_dict = resp
-	context_dict2 = {'name': 'vainglory', 'tutor': 'johnson', 'price': '333', 'description': 'Teach you how to be a master in vainglory in three classes, each with 60 minutes.'}
-	return render(request, 'course_info.html', context_dict)
+	#Method1 with requests:
+	course_req = requests.get('http://exp-api:8000/course/'+pk)
+	course = json.loads(course_req.text)
+	return render(request, 'course_info.html', course)
+	#Method2 with urllib:
+	# req = urllib.request.Request('http://exp-api:8000/course/'+pk)
+	# resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+	# resp = json.loads(resp_json)
+	# context_dict = resp
+	# return render(request, 'course_info.html', context_dict)
 
-def courseList(request):
-	course_req = requests.get('http://exp-api:8000/courses/')
-	courseList = json.loads(course_req.text)
-	return render(request, 'courseList.html', {'courseList': courseList})
-	#req = urllib.request.Request('http://exp-api:8000/courseList'+pk)
-	#resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-	#resp = json.loads(resp_json)
+#Courses-GET: Use courses service to get information of all courses
+#Notes: may need to change to base on search options
+def courses_info(request):
+	courses_req = requests.get('http://exp-api:8000/courses/')
+	courses = json.loads(courses_req.text)
+	return render(request, 'courses_info.html', {'courses': courses})
 
-	#context_dict = resp
-	courseList = [{'name': '3', 'course_tutor': 'j', 'price': '3', 'description': '.'}, {'name': '3', 'course_tutor': 'j', 'price': '3', 'description': '.'}]
-	return render(request, 'courseList.html', {'courseList': courseList})
-
-	return render(request, 'courseList.html', context_dict)
 
 	
