@@ -13,7 +13,7 @@ def home(request):
 #Course-GET: Use course service to get information of a course
 def course_info(request, pk = ''):
 	#Method1 with requests:
-	course_req = requests.get('http://exp-api:8000/course/'+pk)
+	course_req = requests.get('http://exp-api:8000/v1/course/'+pk)
 	course = json.loads(course_req.text)
 	return render(request, 'course_info.html', course)
 	#Method2 with urllib:
@@ -26,7 +26,7 @@ def course_info(request, pk = ''):
 #Courses-GET: Use courses service to get information of all courses
 #Notes: may need to change to base on search options
 def courses_info(request):
-	courses_req = requests.get('http://exp-api:8000/courses/')
+	courses_req = requests.get('http://exp-api:8000/v1/courses/')
 	courses = json.loads(courses_req.text)
 	return render(request, 'courses_info.html', {'courses': courses})
 
