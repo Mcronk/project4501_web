@@ -30,5 +30,10 @@ def courses_info(request):
 	courses = json.loads(courses_req.text)
 	return render(request, 'courses_info.html', {'courses': courses})
 
+def signup(request):
+	return render(request, 'signup.html', {})
+
+def login(request):
+	return render(request, 'login.html', {})
 
 	

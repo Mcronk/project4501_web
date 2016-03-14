@@ -10,6 +10,9 @@ urlpatterns = patterns('',
     url(r'^course/$', views.course_info, name='course_info'),
     url(r'^course/(?P<pk>[0-9]+)/$', views.course_info, name='course_info'),
     url(r'^courses/$', views.courses_info, name='courses_info'),
+    url(r'^signup/$', views.signup, name='signup'),
+    url(r'^login/$', views.login, name='login'),
+
 ) 
 
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
