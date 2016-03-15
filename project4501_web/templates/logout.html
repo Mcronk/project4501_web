@@ -81,13 +81,14 @@
         </div>
         <!-- /.container -->
     </nav>
-    <a name="signup"></a>
+    <a name="logout"></a>
     <div class="formcontainer">
-			<h2 id = "header1" style = "margin-bottom: 30px;">Join UVA Tutoring today.</h2>
-			<form action="/signup/" method="post">
+			<h2 id = "header1" style = "margin-bottom: 30px;">Are you sure you want to end your session?</h2>
+            <!-- Check this with group -->
+			<form action="/logout/" method="delete">
 				{{ form }}	
 		    	<div id="buttonstyle">
-		            <input type="submit"  id="button" name="Submit" value="Sign Up" class="pure-button pure-button-primary" />
+		            <input type="submit"  id="button" name="Submit" value="Log out" class="pure-button pure-button-primary" />
 				</div>
 		    </form>
 	</div>

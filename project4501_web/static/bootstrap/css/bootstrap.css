@@ -130,6 +130,12 @@ input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer;
+  border-radius: 8px;
+  background-color: #0084b4;
+  color: white;
+  padding:10px;
+  margin-top:10px;
+  width: 100%;
 }
 button[disabled],
 html input[disabled] {
@@ -142,6 +148,12 @@ input::-moz-focus-inner {
 }
 input {
   line-height: normal;
+}
+input[type=text] {
+    width: 100%;
+    border: 1px solid #0084b4;
+    padding-top: 12px;
+    margin-bottom: 12px;
 }
 input[type="checkbox"],
 input[type="radio"] {
@@ -1587,6 +1599,17 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+.formcontainer {
+  position: absolute;
+  right: 30%;
+  left: 30%;
+  padding-top: 120px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 }
 @media (min-width: 768px) {
   .container {
