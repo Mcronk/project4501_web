@@ -1,0 +1,21 @@
+{% block content %}
+{% load staticfiles %}
+        <p>
+</p>
+	<h1 id = "header1">
+Login</h1>
+		{% csrf_token %}
+
+		<div id="styledivider">
+			<label for="username" id="labels">User Name</label>
+			<input type="text" name="user_name" value="" size="25">
+		</div>
+        <div id="styledivider">
+        	<label for="password" id="labels">Password</label>
+			<input type="password" name="user_password" value="" size="25">
+		</div>
+    		<div id="buttonstyle">
+                <input type="submit"  id="buttonstyleII" name="Submit" value="Submit" class="pure-button pure-button-primary" />
+		</div>
+    </form>
+{% endblock %}
