@@ -60,8 +60,11 @@ def login(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             info = {'email': email, 'password':password}
-            msg = requests.post('http://exp-api:8000/v1/', data = info)
-            return JsonResponse({'msg': msg})
+            info = {'email': "333", 'password':"333"}
+            # msg = requests.get('http://exp-api:8000/v1/login/')
+            msg = requests.post('http://exp-api:8000/v1/login/', data = json.dumps(info))
+            login_data = json.loads(msg.text)
+            return JsonResponse({'msg': login_data})
             return render(request, 'login.html')
     else:
         form = LoginForm()
