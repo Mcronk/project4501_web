@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 import urllib.request
 import urllib.parse
@@ -60,7 +60,9 @@ def login(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             info = {'email': email, 'password':password}
-            requests.get('http://exp-api:8000/v1/', info)
+            msg = requests.post('http://exp-api:8000/v1/', data = info)
+            return JsonResponse({'msg': msg})
+            return render(request, 'login.html')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
