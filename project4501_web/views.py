@@ -3,6 +3,7 @@ from django.shortcuts import render
 import urllib.request
 import urllib.parse
 import json
+import requests
 from .forms import SignupForm, LoginForm, ListingForm
 # make a GET request and parse the returned JSON                                                                                                                                                           # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
@@ -35,10 +36,15 @@ def courses_info(request):
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
-        #if form.is_valid():
-            #Process and clean data 
-            #Redirect to new URL
-
+        if form.is_valid():
+            #Process and clean data
+            name = form.cleaned_data['name']
+            password = form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            description = form.cleaned_data['description']
+            info = {'name': name, 'password':password, 'email':email, 'phone':phone, 'description':description}          
+            requests.post('http://exp-api:8000/v1/', info)
     #urllib.request.Request('http://exp-api:8000/product'+info)
     else: 
         form = SignupForm()
@@ -47,21 +53,30 @@ def signup(request):
 
 def login(request):
     if request.method == 'GET':
-        #Not sure if it's okay to do None here
+        #Check... not sure if it's okay to do None here
         form = LoginForm(request.GET or None)
-        #if form.is_valid():
+        if form.is_valid():
             #Process and clean data 
-            #Redirect to new URL
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            info = {'email': email, 'password':password}
+            requests.get('http://exp-api:8000/v1/', info)
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
 def listing(request):
     if request.method == 'POST':
-        form = LisingForm(request.POST)
-        #if form.is_valid():
-            #Process and clean data 
-            #Redirect to new URL
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            course_name = form.cleaned_data['course_name']
+            tag = form.cleaned_data['tag']
+            description = form.cleaned_data['description']
+            qualification = form.cleaned_data['qualification']
+            times = form.cleaned_data['times']
+            price = form.cleaned_data['price']
+            info = {'course_name':course_name, 'tag':tag, 'description':description, 'qualification':qualification, 'times':times, 'price':price}
+            requests.post('http://exp-api:8000/v1/', info)
     else:
         form = ListingForm()
 
@@ -71,14 +86,10 @@ def listing(request):
 
 def logout(request):
     #Check this with group
-    #if request.method == 'DELETE':
-    #    form = LisingForm(request.DELETE)
-        #if form.is_valid():
-            #Process and clean data 
-            #Redirect to new URL
-    #else:
-    #    form = ListingForm()
-    #Temporarily using login.html to render
+
+    if request.method == 'POST':
+        requests.post('http://exp-api:8000/v1/', {{csrf_token}})
+
     return render(request, 'logout.html')
 
 

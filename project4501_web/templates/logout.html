@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% csrf_token %}
 <html lang="en">
 
 <head>
@@ -85,7 +84,7 @@
     <div class="formcontainer">
 			<h2 id = "header1" style = "margin-bottom: 30px;">Are you sure you want to end your session?</h2>
             <!-- Check this with group -->
-			<form action="/logout/" method="delete">
+			<form action="/logout/" method="post">{% csrf_token %}
 				{{ form }}	
 		    	<div id="buttonstyle">
 		            <input type="submit"  id="button" name="Submit" value="Log out" class="pure-button pure-button-primary" />

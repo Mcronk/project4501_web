@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% csrf_token %}
 <html lang="en">
 
 <head>
@@ -84,7 +83,7 @@
     <a name="login"></a>
     <div class="formcontainer">
 			<h2 id = "header1" style = "margin-bottom: 30px;">Log in to UVA Tutoring</h2>
-			<form action="/login/" method="get">
+			<form action="/login/" method="get">{% csrf_token %}
 				{{ form }}	
 		    	<div id="buttonstyle">
 		            <input type="submit"  id="button" name="Submit" value="Log in" class="pure-button pure-button-primary" />
