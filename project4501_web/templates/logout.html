@@ -80,13 +80,14 @@
         </div>
         <!-- /.container -->
     </nav>
-    <a name="login"></a>
+    <a name="logout"></a>
     <div class="formcontainer">
-			<h2 id = "header1" style = "margin-bottom: 30px;">Log in to UVA Tutoring</h2>
-			<form action="/login/" method="get">{% csrf_token %}
+			<h2 id = "header1" style = "margin-bottom: 30px;">Are you sure you want to end your session?</h2>
+            <!-- Check this with group -->
+			<form action="/logout/" method="post">{% csrf_token %}
 				{{ form }}	
 		    	<div id="buttonstyle">
-		            <input type="submit"  id="button" name="Submit" value="Log in" class="pure-button pure-button-primary" />
+		            <input type="submit"  id="button" name="Submit" value="Log out" class="pure-button pure-button-primary" />
 				</div>
 		    </form>
 	</div>
