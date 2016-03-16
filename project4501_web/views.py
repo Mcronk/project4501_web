@@ -59,10 +59,9 @@ def login(request):
             #Process and clean data 
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            info = {'email': email, 'password':password}
-            info = {'email': "333", 'password':"333"}
+            data = {'email': email, 'password':password}
             # msg = requests.get('http://exp-api:8000/v1/login/')
-            msg = requests.post('http://exp-api:8000/v1/login/', data = json.dumps(info))
+            msg = requests.post('http://exp-api:8000/v1/login/', data = data)
             login_data = json.loads(msg.text)
             return JsonResponse({'msg': login_data})
             return render(request, 'login.html')
