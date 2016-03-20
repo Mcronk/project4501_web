@@ -148,12 +148,12 @@ input::-moz-focus-inner {
 }
 input {
   line-height: normal;
+  width: 100%;
+  border: 1px solid #0084b4;
+  padding-top: 12px;
 }
 input[type=text] {
-    width: 100%;
-    border: 1px solid #0084b4;
-    padding-top: 12px;
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 input[type="checkbox"],
 input[type="radio"] {
@@ -1599,6 +1599,12 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+.error {
+  color:red;
+  text-align:center;
+  font-size: 20px;
+  margin-bottom:40px;
 }
 .formcontainer {
   position: absolute;
