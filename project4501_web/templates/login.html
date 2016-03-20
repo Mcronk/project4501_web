@@ -84,7 +84,7 @@
     <div class="formcontainer">
             <div class = "error" style = "color:red;"> {{error}} </div>
 			<h2 id = "header1" style = "margin-bottom: 30px;">Log in to UVA Tutoring</h2>
-			<form action="/login/" method="get">{% csrf_token %}
+			<form action="/login/" method="post">{% csrf_token %}
 				{{ form }}	
 		    	<div id="buttonstyle">
 		            <input type="submit"  id="button" name="Submit" value="Log in" class="pure-button pure-button-primary" />
