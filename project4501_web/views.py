@@ -57,12 +57,12 @@ def signup(request):
 
 def login(request):
 	if request.method == 'GET':
-	    form = LoginForm()
-	    next = request.GET.get('next') or reverse('home')
-	    return render(request,'login.html', {'form':form})
+		form = LoginForm()
+		next = request.GET.get('next') or reverse('home')
+		return render(request,'login.html', {'form':form})
 	form = LoginForm(request.POST)
 	if not form.is_valid():
-	    return render(request, 'login.html', {'form':form, 'error':'The username and password you entered did not match our records. Please double-check and try again.'})
+		return render(request, 'login.html', {'form':form, 'error':'The username and password you entered did not match our records. Please double-check and try again.'})
 	email = form.cleaned_data['email']
 	password = form.cleaned_data['password']
 	next = form.cleaned_data.get('next') or reverse('home')
@@ -72,7 +72,7 @@ def login(request):
 	resp_data = json.loads(resp.text)
 	if not resp_data or not resp_data['work']:
 	  # couldn't log them in, send them back to login page with error
-	    return render(request, 'login.html', {'form':form, 'error':resp_data['msg']})
+		return render(request, 'login.html', {'form':form, 'error':resp_data['msg']})
 	authenticator = resp_data['resp']['authenticator']
 	response = HttpResponseRedirect(next)
 	response.set_cookie("auth", authenticator)
@@ -98,15 +98,15 @@ def login(request):
 def listing(request):
 	auth = request.COOKIES.get('auth')
 	if not auth:
-	    # handle user not logged in while trying to create a listing
-	    return HttpResponseRedirect(reverse("login") + "?next=" + reverse("listing")
+		# handle user not logged in while trying to create a listing
+		return HttpResponseRedirect(reverse("login") + "?next=" + reverse("listing"))
 	if request.method == 'GET':
-	    form = ListingForm();
-	    return render("listing.html", {'form':form})
+		form = ListingForm();
+		return render("listing.html", {'form':form})
 	form = ListingForm(request.POST)
 	if not form.is_valid:
-	    form = ListingForm();
-	    return render("listing.html", {'form':form, 'error':'Please complete the form correctly'})
+		form = ListingForm();
+		return render("listing.html", {'form':form, 'error':'Please complete the form correctly'})
 	course_name = form.cleaned_data['course_name']
 	tag = form.cleaned_data['tag']
 	description = form.cleaned_data['description']
@@ -115,10 +115,10 @@ def listing(request):
 	price = form.cleaned_data['price']
 	#resp = create_listing_exp_api ()
 	if resp and not resp['work']:        
-	    if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
-	        # exp service reports invalid authenticator -- treat like user not logged in
-	        return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
-	return render("listing.html", {'form':form, 'success', 'Your listing has been created.'})
+		if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
+			# exp service reports invalid authenticator -- treat like user not logged in
+			return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
+	return render("listing.html", {'form':form, 'success': 'Your listing has been created.'})
 	# if request.method == 'POST':
 	#    form = ListingForm(request.POST)
 	#    if form.is_valid():
@@ -136,13 +136,19 @@ def listing(request):
 
 
 def logout(request):
-	#delete cookie and authenticator
-	# auth = request.COOKIES.get('auth')
-	# if not auth:
-	#     # handle user not logged in while trying to create a listing
-	#     return HttpResponseRedirect(reverse("login"))
-	# resp = delete_cookie_exp()
-	# if resp:
-	#     return render('home.html', {'success': 'You have been logged out.'})
-	# return HttpResponseRedirect(reverse("login"))
+	# delete cookie and authenticator
+	auth = request.COOKIES.get('auth')
+	# return JsonResponse({'result': auth}, safe=False)
+	if not auth:
+		# handle user not logged in while trying to create a listing
+		return HttpResponseRedirect(reverse("login"))
+	data = {'authenticator': auth}
+	resp = requests.post('http://exp-api:8000/v1/logout/', data = data)
+	resp_data = json.loads(resp.text)
+	if resp_data['work']:
+		return JsonResponse({'result': resp_data}, safe=False)
+		return render('home.html', {'success': 'You have been logged out.'})
+	return JsonResponse({'result': resp_data}, safe=False)
+	return HttpResponseRedirect(reverse("login"))
+
 	return render(request, 'logout.html')
