@@ -9,7 +9,10 @@ class SignupForm(forms.Form):
 
 class LoginForm(forms.Form):
 	email = forms.CharField(label='Email', max_length=20)
-	password = forms.CharField(label='Password', max_length=20)
+	password = forms.CharField(widget=forms.PasswordInput, label='Password', max_length=20)
+	widgets = {
+        'password': forms.PasswordInput(),
+    }
 	
 class ListingForm(forms.Form):
 	course_name = forms.CharField(label='Course Name', max_length=20)
