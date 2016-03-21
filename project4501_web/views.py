@@ -72,7 +72,6 @@ def login(request):
 	password = form.cleaned_data['password']
 	next = form.cleaned_data.get('next') or reverse('home')
 	data = {'email':email, 'password':password}
-	#resp = login_exp_api ()
 	resp = requests.post('http://exp-api:8000/v1/login/', data = data)
 	resp_data = json.loads(resp.text)
 	if not resp_data or not resp_data['work']:
@@ -81,7 +80,7 @@ def login(request):
 	authenticator = resp_data['resp']['authenticator']
 	response = HttpResponseRedirect(next)
 	response.set_cookie("auth", authenticator)
-	return render(request, 'home.html')
+	return response
 
 def listing(request):
 	auth = request.COOKIES.get('auth')
@@ -125,7 +124,7 @@ def logout(request):
 	if resp_data['work']:
 		return JsonResponse({'result': resp_data}, safe=False)
 		return render('home.html', {'success': 'You have been logged out.'})
-	return JsonResponse({'result': resp_data}, safe=False)
+	# return JsonResponse({'result': resp_data}, safe=False)
 	return HttpResponseRedirect(reverse("home"))
 
 	return render(request, 'logout.html')
