@@ -17,7 +17,7 @@ class LoginForm(forms.Form):
 class ListingForm(forms.Form):
 	course_name = forms.CharField(label='Course Name', max_length=20)
 	tag = forms.CharField(label='Tag', max_length=20)
-	description = forms.CharField(label='Description', max_length = 50)
+	description = forms.CharField(label='Description', max_length = 500)
 	qualification = forms.CharField(label='Qualifications', max_length=30)
 	times = forms.CharField(label='Available Times', max_length=50)
 	price = forms.IntegerField(label='Price per Hour')
