@@ -49,8 +49,12 @@ def signup(request):
 			description = form.cleaned_data['description']
 			data = {'grade': 0,'name': name, 'password':password, 'email':email, 'phone':phone, 'description':description}
 			response = requests.post('http://exp-api:8000/v1/account/create/', data = data)
-			response_data = json.loads(response.text)
-			return JsonResponse({'result': response_data}, safe=False)
+			resp_data = json.loads(response.text)
+			if not resp_data or not resp_data['work']:
+				return render(request, 'signup.html', {'form':form, 'error':resp_data['msg']})
+				return JsonResponse(request, resp_data['msg'])
+			return HttpResponseRedirect(reverse("login"))
+ 
 	#urllib.request.Request('http://exp-api:8000/product'+info)
 	else: 
 		form = SignupForm()
@@ -77,7 +81,7 @@ def login(request):
 	authenticator = resp_data['resp']['authenticator']
 	response = HttpResponseRedirect(next)
 	response.set_cookie("auth", authenticator)
-	return response
+	return render(request, 'home.html')
 
 def listing(request):
 	auth = request.COOKIES.get('auth')
