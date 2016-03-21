@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     url(r'^course/(?P<pk>[0-9]+)/$', views.course_info, name='course_info'),
     url(r'^courses/$', views.courses_info, name='courses_info'),
     url(r'^signup/$', views.signup, name='signup'),
-    url(r'^login/$', views.login, name='login'),
-    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^listing/$', views.listing, name='listing'),
 ) 
 

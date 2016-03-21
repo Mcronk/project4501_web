@@ -6,8 +6,7 @@ import json
 import requests
 from django.core.urlresolvers import reverse
 from .forms import SignupForm, LoginForm, ListingForm
-from django.http import HttpResponseRedirect
-# make a GET request and parse the returned JSON                                                                                                                                                           # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
+from django.http import HttpResponseRedirect                                                                                                                                                        # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
 #Notes: currently no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
@@ -53,15 +52,21 @@ def signup(request):
 			if not resp_data or not resp_data['work']:
 				return render(request, 'signup.html', {'form':form, 'error':resp_data['msg']})
 				return JsonResponse(request, resp_data['msg'])
+			auth = request.COOKIES.get('auth')
+			if auth:
+				return HttpResponseRedirect(reverse("home"))
 			return HttpResponseRedirect(reverse("login"))
- 
 	#urllib.request.Request('http://exp-api:8000/product'+info)
 	else: 
 		form = SignupForm()
 	return render(request, 'signup.html', {'form': form})
 
-def login(request):
+def user_login(request):
 	if request.method == 'GET':
+		# if a user is already login, log the user out first
+		auth = request.COOKIES.get('auth')
+		if auth:
+			return HttpResponseRedirect(reverse("logout"))
 		form = LoginForm()
 		next = request.GET.get('next') or reverse('home')
 		return render(request,'login.html', {'form':form})
@@ -81,6 +86,27 @@ def login(request):
 	response = HttpResponseRedirect(next)
 	response.set_cookie("auth", authenticator)
 	return response
+
+def user_logout(request):
+	# delete cookie and authenticator
+	auth = request.COOKIES.get('auth')
+	if not auth:
+		# handle user not logged in while trying to logout
+		return HttpResponseRedirect(reverse("login"))
+	data = {'authenticator': auth}
+	resp = requests.post('http://exp-api:8000/v1/logout/', data = data)
+	resp_data = json.loads(resp.text)
+	if resp_data['work']:
+		response = HttpResponseRedirect(reverse("home"))
+		response.delete_cookie('auth')
+		response.delete_cookie('csrftoken')
+		return response	
+		# return render(request, 'home.html', {'success': 'You have been logged out.'})
+	response = HttpResponseRedirect(reverse("home"))
+	response.delete_cookie('auth')
+	response.delete_cookie('csrftoken')
+	return response
+	# return JsonResponse({'result': resp_data}, safe=False)
 
 def listing(request):
 	auth = request.COOKIES.get('auth')
@@ -109,29 +135,3 @@ def listing(request):
 				return HttpResponseRedirect(reverse("login") + "?next=" + reverse("listing"))
 		return HttpResponseRedirect(reverse("course_info")+str(resp_data['resp']['course_pk']))
 		return render(request, "listing.html", {'form':form, 'success': 'Your course has been created.'})
-
-
-def logout(request):
-	# delete cookie and authenticator
-	auth = request.COOKIES.get('auth')
-	# return JsonResponse({'result': auth}, safe=False)
-	if not auth:
-		# handle user not logged in while trying to create a listing
-		return HttpResponseRedirect(reverse("login"))
-	data = {'authenticator': auth}
-	resp = requests.post('http://exp-api:8000/v1/logout/', data = data)
-	resp_data = json.loads(resp.text)
-	if resp_data['work']:
-		request.COOKIES.delete('auth')
-		# response = logout(request)
-		# # response = logout(request, next_page=reverse('home'))
-		# # response = HttpResponseRedirect(reverse("home"))
-		# response.delete_cookie('auth')
-		# response.delete_cookie('csrftoken')
-		# return response
-		# return JsonResponse({'result': resp_data}, safe=False)	
-		return render('home.html', {'success': 'You have been logged out.'})
-	# return JsonResponse({'result': resp_data}, safe=False)
-	return HttpResponseRedirect(reverse("home"))
-
-	return render(request, 'logout.html')
