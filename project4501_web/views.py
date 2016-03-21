@@ -107,7 +107,7 @@ def listing(request):
 		resp_data = json.loads(resp.text)
 		if not resp_data or not resp_data['work']:
 				# exp service reports invalid authenticator -- treat like user not logged in
-				return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
+				return HttpResponseRedirect(reverse("login") + "?next=" + reverse("listing"))
 		return HttpResponseRedirect(reverse("course_info")+str(resp_data['resp']['course_pk']))
 		return render(request, "listing.html", {'form':form, 'success': 'Your course has been created.'})
 
@@ -126,6 +126,6 @@ def logout(request):
 		return JsonResponse({'result': resp_data}, safe=False)
 		return render('home.html', {'success': 'You have been logged out.'})
 	return JsonResponse({'result': resp_data}, safe=False)
-	return HttpResponseRedirect(reverse("login"))
+	return HttpResponseRedirect(reverse("home"))
 
 	return render(request, 'logout.html')
