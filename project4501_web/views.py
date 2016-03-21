@@ -19,7 +19,8 @@ def home(request):
 def course_info(request, pk = ''):
 	#Method1 with requests:
 	course_req = requests.get('http://exp-api:8000/v1/course/'+pk)
-	course = json.loads(course_req.text)
+	course_data = json.loads(course_req.text)
+	course = course_data['resp']
 	return render(request, 'course_info.html', course)
 	#Method2 with urllib:
 	# req = urllib.request.Request('http://exp-api:8000/course/'+pk)
@@ -78,61 +79,33 @@ def login(request):
 	response.set_cookie("auth", authenticator)
 	return response
 
-	# if request.method == 'GET':
-	# 	#Check... not sure if it's okay to do None here
-	# 	form = LoginForm(request.GET or None)
-	# 	if form.is_valid():
-	# 		#Process and clean data 
-	# 		email = form.cleaned_data['email']
-	# 		password = form.cleaned_data['password']
-	# 		data = {'email': email, 'password':password}
-	# 		# msg = requests.get('http://exp-api:8000/v1/login/')
-	# 		msg = requests.post('http://exp-api:8000/v1/login/', data = data)
-	# 		login_data = json.loads(msg.text)
-	# 		return JsonResponse({'msg': login_data})
-	# 		return render(request, 'login.html')
-	# else:
-	#    form = LoginForm()
-	# return render(request, 'login.html', {'form': form})
-
 def listing(request):
 	auth = request.COOKIES.get('auth')
 	if not auth:
 		# handle user not logged in while trying to create a listing
 		return HttpResponseRedirect(reverse("login") + "?next=" + reverse("listing"))
 	if request.method == 'GET':
-		form = ListingForm();
-		return render("listing.html", {'form':form})
-	form = ListingForm(request.POST)
-	if not form.is_valid:
-		form = ListingForm();
-		return render("listing.html", {'form':form, 'error':'Please complete the form correctly'})
-	course_name = form.cleaned_data['course_name']
-	tag = form.cleaned_data['tag']
-	description = form.cleaned_data['description']
-	qualification = form.cleaned_data['qualification']
-	times = form.cleaned_data['times']
-	price = form.cleaned_data['price']
-	#resp = create_listing_exp_api ()
-	if resp and not resp['work']:        
-		if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
-			# exp service reports invalid authenticator -- treat like user not logged in
-			return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
-	return render("listing.html", {'form':form, 'success': 'Your listing has been created.'})
-	# if request.method == 'POST':
-	#    form = ListingForm(request.POST)
-	#    if form.is_valid():
-	# 	   course_name = form.cleaned_data['course_name']
-	# 	   tag = form.cleaned_data['tag']
-	# 	   description = form.cleaned_data['description']
-	# 	   qualification = form.cleaned_data['qualification']
-	# 	   times = form.cleaned_data['times']
-	# 	   price = form.cleaned_data['price']
-	# 	   info = {'course_name':course_name, 'tag':tag, 'description':description, 'qualification':qualification, 'times':times, 'price':price}
-	# 	   requests.post('http://exp-api:8000/v1/', info)
-	# else:
-	#    form = ListingForm()
-	# return render(request, 'listing.html', {'form': form})
+		form = ListingForm()
+		return render(request, "listing.html", {'form':form})
+	if request.method == 'POST':
+		form = ListingForm(request.POST)
+		if not form.is_valid():
+			# form = ListingForm()
+			return render(request, "listing.html", {'form':form, 'error':'Please complete the form correctly'})
+		name = form.cleaned_data['course_name']
+		tag = form.cleaned_data['tag']
+		description = form.cleaned_data['description']
+		qualification = form.cleaned_data['qualification']
+		time = form.cleaned_data['times']
+		price = form.cleaned_data['price']
+		data = {'authenticator':auth, 'name':name, 'tag':tag, 'description':description, 'qualification':qualification, 'time':time, 'price':price}
+		resp = requests.post('http://exp-api:8000/v1/course/create/', data = data)
+		resp_data = json.loads(resp.text)
+		if not resp_data or not resp_data['work']:
+				# exp service reports invalid authenticator -- treat like user not logged in
+				return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
+		return HttpResponseRedirect(reverse("course_info")+str(resp_data['resp']['course_pk']))
+		return render(request, "listing.html", {'form':form, 'success': 'Your course has been created.'})
 
 
 def logout(request):
