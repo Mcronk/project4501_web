@@ -122,7 +122,14 @@ def logout(request):
 	resp = requests.post('http://exp-api:8000/v1/logout/', data = data)
 	resp_data = json.loads(resp.text)
 	if resp_data['work']:
-		return JsonResponse({'result': resp_data}, safe=False)
+		request.COOKIES.delete('auth')
+		# response = logout(request)
+		# # response = logout(request, next_page=reverse('home'))
+		# # response = HttpResponseRedirect(reverse("home"))
+		# response.delete_cookie('auth')
+		# response.delete_cookie('csrftoken')
+		# return response
+		# return JsonResponse({'result': resp_data}, safe=False)	
 		return render('home.html', {'success': 'You have been logged out.'})
 	# return JsonResponse({'result': resp_data}, safe=False)
 	return HttpResponseRedirect(reverse("home"))
