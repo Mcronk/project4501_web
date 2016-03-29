@@ -5,7 +5,7 @@ import urllib.parse
 import json
 import requests
 from django.core.urlresolvers import reverse
-from .forms import SignupForm, LoginForm, ListingForm
+from .forms import SignupForm, LoginForm, ListingForm, SearchForm
 from django.http import HttpResponseRedirect                                                                                                                                                        # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
 #Notes: currently no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
@@ -135,3 +135,21 @@ def listing(request):
 				return HttpResponseRedirect(reverse("login") + "?next=" + reverse("listing"))
 		return HttpResponseRedirect(reverse("course_info")+str(resp_data['resp']['course_pk']))
 		return render(request, "listing.html", {'form':form, 'success': 'Your course has been created.'})
+
+def search(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if not form.is_valid():
+            return render(request, 'search.html', {'form':form, 'error':'Please enter a search query'})
+        if form.is_valid():
+            keywords = form.cleaned_data['keywords']
+            data = {'keywords': name}
+            #response = requests.post('http://exp-api:8000/v1/account/create/', data = data)
+            #resp_data = json.loads(response.text)
+            #if not resp_data or not resp_data['work']:
+            #   return render(request, 'signup.html', {'form':form, 'error':resp_data['msg']})
+            #   return JsonResponse(request, resp_data['msg'])
+            #return HttpResponseRedirect(reverse("login"))
+    else: 
+        form = SearchForm()
+    return render(request, 'search.html', {'form': form})

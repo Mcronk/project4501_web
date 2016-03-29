@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^listing/$', views.listing, name='listing'),
+    url(r'^search/$', views.search, name='search')
 ) 
 
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

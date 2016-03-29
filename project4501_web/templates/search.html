@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<a name="search"></a>
+<div class="formcontainer">
+    <div class = "error" style = "color:red;"> {{error}} </div>
+	<h2 id = "header1" style = "margin-bottom: 30px;">Find a class.</h2>
+		<form action="/search/" method="post">{% csrf_token %}
+			{{ form }}	
+		    <div id="buttonstyle">
+		        <input type="submit"  id="button" name="Submit" value="Submit" class="pure-button pure-button-primary" />
+			</div>
+		</form>
+    </div>
+    <div class = "search-result">
+    </div>
+</div>
+{% endblock %}
+    

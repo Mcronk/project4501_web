@@ -278,6 +278,15 @@ th {
   src: url('../fonts/glyphicons-halflings-regular.eot');
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
+.search-result {
+  position: absolute;
+  border: 1.5px solid blue;
+  width: 69%;
+  margin-top: 400px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: 200px;
+}
 .glyphicon {
   position: relative;
   top: 1px;
