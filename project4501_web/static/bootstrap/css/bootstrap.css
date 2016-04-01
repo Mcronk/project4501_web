@@ -281,11 +281,9 @@ th {
 .search-result {
   position: absolute;
   border: 1.5px solid blue;
-  width: 69%;
-  margin-top: 400px;
-  margin-left: 15%;
-  margin-right: 15%;
-  height: 200px;
+  width: 620px;
+  margin-left: 18.5%;
+  height: 400px;
 }
 .glyphicon {
   position: relative;
@@ -1619,6 +1617,17 @@ pre code {
   position: absolute;
   right: 30%;
   left: 30%;
+  padding-top: 120px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+.searchcontainer {
+  position: absolute;
+  right: 10%;
+  left: 10%;
   padding-top: 120px;
   padding-right: 15px;
   padding-left: 15px;

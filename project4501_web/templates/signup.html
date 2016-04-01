@@ -1,18 +1,4 @@
 {% extends "base.html" %}
-{% block nav %}
-    <li>
-        <a href="{% url 'home'%}">About</a>
-    </li>
-    <li>
-        <a href={% url 'signup'%}>Sign up</a>
-    </li>
-    <li id="login">
-        <a href={% url 'login'%}>Login</a>
-    </li>
-    <li>
-        <a href={% url 'search'%}>Search</a>
-    </li>
-{% endblock %}
 {% block content %}
     <a name="signup"></a>
     <div class="formcontainer">
