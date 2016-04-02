@@ -137,6 +137,8 @@ def listing(request):
         return render(request, "listing.html", {'form':form, 'success': 'Your course has been created.'})
 
 def search(request):
+    courses_req = requests.get('http://exp-api:8000/v1/courses/')
+    courses = json.loads(courses_req.text)
     if request.method == 'POST':
         data = request.POST.get('query','')
         #if input is incorrect:
@@ -152,4 +154,4 @@ def search(request):
             #   return JsonResponse(request, resp_data['msg'])
             #return HttpResponseRedirect(reverse("login"))
     else: 
-        return render(request, 'search.html')
+        return render(request, 'search.html', {'courses': courses})

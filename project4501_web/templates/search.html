@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block search %}
 {% endblock %}
 {% block content %}
@@ -22,7 +23,15 @@
                		</div>
                 </div>
             </form>
-            <div class = "search-result">
+
+            <div class = "search-result" style="padding-left:5px;">
+                {% for course in courses %}
+                <p>
+                    <h3><a href={% url 'course_info'%}/{{course.course_pk}}>{{course.course_name}}</a></h3>
+                    {{course.course_description}}
+                    <br>
+                </p>
+                {% endfor %}
             </div>
         </div>
 </div>
