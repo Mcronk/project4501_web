@@ -85,16 +85,17 @@ $(document).ready(function(){
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     {% block nav %}
-                    <li>
+                    <!--<li>
                         <a href="{% url 'home'%}">About</a>
                     </li>
+                -->
                     <li>
                         <a href={% url 'courses_info'%}>Courses</a>
                     </li>
                     <li>
                         <a href={% url 'listing'%}>Create Course</a>
                     </li>
-                    <li>
+                    <li id="signup">
                         <a href={% url 'signup'%}>Sign up</a>
                     </li>
                     <li id="login">
