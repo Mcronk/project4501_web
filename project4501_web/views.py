@@ -19,8 +19,8 @@ def course_info(request, pk = ''):
     #Method1 with requests:
     course_req = requests.get('http://exp-api:8000/v1/course/'+pk)
     course_data = json.loads(course_req.text)
-    course = course_data['resp']
-    return render(request, 'course_info.html', course)
+    # course = course_data['resp']
+    return render(request, 'course_info.html', course_data['resp'])
     #Method2 with urllib:
     # req = urllib.request.Request('http://exp-api:8000/course/'+pk)
     # resp_json = urllib.request.urlopen(req).read().decode('utf-8')

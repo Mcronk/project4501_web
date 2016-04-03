@@ -20,15 +20,17 @@
                 <div class="thumbnail">
                     <img class="img-responsive" src="{% static 'bootstrap/img/banner-bg.jpg' %}" alt="">
                     <div class="caption-full">
-                        <h4 class="pull-right">price: ${{course_price}}</h4>
-                        <h4>course: <a href="#">{{course_name}}</a></h4>
-                        <h3><a href="#">{{tutor_name}}</a></h3>
+                        <h4 class="pull-right">price: ${{course.price}}</h4>
+                        <h4>course: <a href="#">{{course.name}}</a></h4>
+                        <h3><a href="#">{{user.name}}</a></h3>
                         <!--<p>Want to make these reviews work? Check out
                             <strong><a href="http://maxoffsky.com/code-blog/laravel-shop-tutorial-1-building-a-review-system/">this building a review system tutorial</a>
                             </strong>over at maxoffsky.com!</p>
                         -->
-                        <p>About course:<br>{{course_description}}</p>
-                        <p>About me:<br>{{tutor_description}}</p>
+                        <p>About course:<br>{{course.description}}</p>
+                        <p>About me:<br>{{user.description}}</p>
+                        <p>Qualification:<br>{{course.qualification}}</p>
+                        <p>Time:<br>{{course.time}}</p>
                     </div>
                     <div class="ratings">
                         <p class="pull-right">3 reviews</p>
