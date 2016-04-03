@@ -23,4 +23,4 @@ class ListingForm(forms.Form):
 	price = forms.IntegerField(label='Price per Hour')
 	#tutor
 class SearchForm(forms.Form):
-	keywords = forms.CharField(label='Search', max_length = 50)
+	query = forms.CharField(label='Query', max_length = 50)

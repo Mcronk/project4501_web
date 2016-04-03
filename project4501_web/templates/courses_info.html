@@ -19,11 +19,11 @@
 
                 <div class="thumbnail">
                     <div class="caption-full">
-                        <h4 class="pull-right">price: ${{course.price}}</h4>
+                        <h4 class="pull-right">price: ${{course.course_price}}</h4>
                         <h4>course: <a href={% url 'course_info'%}/{{course.course_pk}}>{{course.course_name}}</a></h4>
                         <h3><a href="#">{{course.course_tutor}}</a></h3>
                         <p>About course:<br>{{course.course_description}}</p>
-                        <p>About me:<br>{{course.tutor_description}}</p>
+                        <p>About me:<br>{{course.course_tutor_description}}</p>
                     </div>
                 </div>
                     

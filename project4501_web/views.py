@@ -140,18 +140,15 @@ def search(request):
     courses_req = requests.get('http://exp-api:8000/v1/courses/')
     courses = json.loads(courses_req.text)
     if request.method == 'POST':
-        data = request.POST.get('query','')
-        #if input is incorrect:
-        #    return render(request, 'search.html', {'form':form, 'error':'Please enter a search query'})
-        #if form.is_valid():
-            #keywords = form.cleaned_data['keywords']
-            #data = {'keywords': name}
-        data = data.clean();
-            #response = requests.post('http://exp-api:8000/v1/account/create/', data = data)
-            #resp_data = json.loads(response.text)
-            #if not resp_data or not resp_data['work']:
-            #   return render(request, 'signup.html', {'form':form, 'error':resp_data['msg']})
-            #   return JsonResponse(request, resp_data['msg'])
-            #return HttpResponseRedirect(reverse("login"))
+        form = SearchForm(request.POST)
+        if not form.is_valid():
+            return render(request, "search.html", {'error':'Please enter a search query'})
+        query = form.cleaned_data['query']
+        data = {'query':query}
+        resp = requests.post('http://exp-api:8000/v1/search/', data = data)
+        resp_data = json.loads(resp.text)
+        #if not resp_data or not resp_data['work']:
+        #    return render(request, 'search.html', {'form':form, 'error':resp_data['msg']})
+        return render(request, 'search.html', {'courses': resp_data})
     else: 
-        return render(request, 'search.html', {'courses': courses})
+        return render(request, 'search.html')

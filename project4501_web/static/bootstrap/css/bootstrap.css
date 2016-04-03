@@ -280,7 +280,6 @@ th {
 }
 .search-result {
   position: absolute;
-  border: 1.5px solid #C0C0C0;
   border-bottom-style: none;
   width: 630px;
   margin-left: 18.5%;

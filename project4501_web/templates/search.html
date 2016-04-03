@@ -15,7 +15,7 @@
 		</form>
 		-->
 		<div>
-           <form action="/search/" class="navbar-form" role="search">
+           <form action="/search/" class="navbar-form" role="search" method="post">{% csrf_token %}
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search" name="query" value = "{{query}}" style= "width:600px;">
                 	<div class="input-group-btn">
@@ -27,8 +27,8 @@
             <div class = "search-result" style="padding-left:5px;">
                 {% for course in courses %}
                 <p>
-                    <h3><a href={% url 'course_info'%}/{{course.course_pk}}>{{course.course_name}}</a></h3>
-                    {{course.course_description}}
+                    <h3><a href={% url 'course_info'%}/{{course.course_pk}}>{{course.name}}</a></h3>
+                    {{course.description}}
                     <br>
                 </p>
                 {% endfor %}
