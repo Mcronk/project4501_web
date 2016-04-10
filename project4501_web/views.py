@@ -4,6 +4,7 @@ import urllib.request
 import urllib.parse
 import json
 import requests
+import socket
 from django.core.urlresolvers import reverse
 from .forms import SignupForm, LoginForm, ListingForm, SearchForm
 from django.http import HttpResponseRedirect                                                                                                                                                        # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
@@ -12,7 +13,12 @@ from django.http import HttpResponseRedirect                                    
 
 #Home: currently no service-oriented home page 
 def home(request):
-    return render(request, 'home.html')
+    try:
+        hostname = socket.gethostname()
+    except:
+        hostname = 'localhost'
+    testing = {"hostname":hostname}
+    return render(request, 'home.html', testing)
 
 #Course-GET: Use course service to get information of a course
 def course_info(request, pk = ''):
