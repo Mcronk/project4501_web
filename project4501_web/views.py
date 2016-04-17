@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from .forms import SignupForm, LoginForm, ListingForm, SearchForm
 from django.http import HttpResponseRedirect                                                                                                                                                        # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
+
 #Notes: currently no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
 
 #Home: currently no service-oriented home page 
